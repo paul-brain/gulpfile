@@ -10,6 +10,8 @@ import cleanCSS from 'gulp-clean-css';
 import terser from 'gulp-terser';
 import sourcemaps from 'gulp-sourcemaps';
 import gulpImg from 'gulp-image';
+import autoprefixer from 'gulp-autoprefixer';
+import babel from 'gulp-babel';
 
 const prepros = true;
 const sass = gulpSass(sassPkg);
@@ -41,6 +43,7 @@ export const style = () => gulp
       specialComments: 0,
     }
   }))
+  .pipe(autoprefixer())
   .pipe(sourcemaps.write('../maps'))
   .pipe(gulp.dest('dist/css'))
   .pipe(browserSync.stream());
@@ -48,6 +51,9 @@ export const style = () => gulp
 export const js = () => gulp
   .src('src/js/**/*.js')
   .pipe(sourcemaps.init())
+/*   .pipe(babel({
+    presets: ['@babel/preset-env'],
+  })) */
   .pipe(terser())
   .pipe(sourcemaps.write('../maps'))
   .pipe(gulp.dest('dist/js'))
